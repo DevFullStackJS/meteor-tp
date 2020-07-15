@@ -9,6 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
+            - run: curl https://install.meteor.com/ | sh
             - run: npm install
             - run: npm test
 workflows:
