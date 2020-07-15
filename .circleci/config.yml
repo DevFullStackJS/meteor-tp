@@ -22,15 +22,6 @@ jobs:
       - store_artifacts:
           path: app.zip
           destination: app
-  lint:
-    docker: *docker-node-lts
-    steps:
-      - checkout
-      - node/with-cache:
-        steps:
-          - run: npm install
-          - attach_workspace: { at: '.' }
-          - run: yarn lint
   build-and-test:
     executor:
       name: node/default
