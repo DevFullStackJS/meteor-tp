@@ -2,9 +2,6 @@ version: 2.1
 aliases:
   - &docker-node-lts
     - image: circleci/node:lts
-  - &restore-node-modules-cache
-    name: Restore node_modules cache
-    key: v1-yarn-deps-{{ checksum "yarn.lock" }}
 orbs:
   node: circleci/node@1.1.6
 jobs:
@@ -29,7 +26,9 @@ jobs:
     docker: *docker-node-lts
     steps:
       - checkout
-      - restore_cache: *restore-node-modules-cache
+      - node/with-cache:
+        steps:
+          - run: npm install
       - attach_workspace: { at: '.' }
       - run: yarn lint
   build-and-test:
